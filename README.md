@@ -1,5 +1,5 @@
 # opensubtitles-parser
-This automates the process of downloading, extracting, and tokeninzing all the text from the opensubtitles dataset into one large corpus text file. Each phrase is on it's own line, and each phrase is delimited by a space separating each token in the phrase.
+This automates the process of downloading, extracting, and tokenizing all the text from the opensubtitles dataset into one large corpus text file. Each phrase is on it's own line, and each phrase is delimited by a space separating each token in the phrase.
 
 ## Attribution
 
