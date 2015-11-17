@@ -11,6 +11,7 @@ import re
 import errno
 
 raw_file = "raw.txt"
+inc = 0
 
 def main():
     parser = argparse.ArgumentParser(description='Set parameters for xml parser.')
@@ -19,24 +20,19 @@ def main():
     args = parser.parse_args()
     processed_data_dir =  args.dataDir
     raw_data_dir = args.rootXmlDir
-    dataFile = processed_data_dir + raw_file
 
     files = findXmlFiles(raw_data_dir)
     print "Have " + str(len(files)) + " to parse!"
     #Setup folder structure and data file
     mkdir_p(processed_data_dir)
-    if mkfile(dataFile):
-        pass
-    else:
-        return 0
-
     for f in files:
         try:
             extractTokenizedPhrases(f, processed_data_dir)
         except KeyboardInterrupt:
             print "Process stopped by user..."
             return 0
-        except:
+        except Exception as e:
+            print e
             print "Error in " + f
             pass
 
@@ -56,8 +52,14 @@ def findXmlFiles(directory):
 The assumption is made (for now) that each <s> node in the xml docs represents
 a token, meaning everything has already been tokenized. At first observation
 this appears to be an ok assumption.
+
+This function has been modified to print to a single file for each movie
+This is for memory consideration when processing later down the pipeline
 '''
 def extractTokenizedPhrases(xmlFilePath, dataDirFilePath):
+    global inc
+    inc += 1
+    mkfile(dataDirFilePath + str(inc) +raw_file)
     tree = ET.parse(xmlFilePath)
     root = tree.getroot()
     print "Processing " + xmlFilePath + "..."
@@ -70,7 +72,7 @@ def extractTokenizedPhrases(xmlFilePath, dataDirFilePath):
         text = cleanText(text)
         try:
             if text[0] != '[' and text[-1] != ':':
-                with open(dataDirFilePath + raw_file, 'a') as f:
+                with open(dataDirFilePath + str(inc) +raw_file, 'a') as f:
                     f.write(text + "\n")
         except IndexError:
             pass
