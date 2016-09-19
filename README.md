@@ -11,7 +11,7 @@ It was made possible by: Jörg Tiedemann, 2009, News from OPUS - A Collection of
 
 When using the script for the first time, run ``./setup.sh ``. This will download the dataset and then parse it.
 
-If you have already downloaded the dataset, run ``python opensubtitleparser.py'' .
+If you have already downloaded the dataset, run ``python opensubtitleparser.py ``.
 
 
 ##Notes
